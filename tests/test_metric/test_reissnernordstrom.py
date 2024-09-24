@@ -23,13 +23,13 @@ def test_metric_reissnernordstrom():
     # define expected metric values
     exp_metric = np.zeros(shape=(4, 4), dtype=float)
 
-    exp_metric[0,0] = 8.387172744E+31
+    exp_metric[0, 0] = 8.387172744E+31
 
-    exp_metric[1,1] = -1.071583007E-15
+    exp_metric[1, 1] = -1.071583007E-15
 
-    exp_metric[2,2] = -1E+12
+    exp_metric[2, 2] = -1E+12
 
-    exp_metric[3,3] = -3.454915028E+11
+    exp_metric[3, 3] = -3.454915028E+11
 
     ms = ReissnerNordstrom(coords=sph, M=M, Q=Q)
 
@@ -37,7 +37,7 @@ def test_metric_reissnernordstrom():
 
     for i in range(3):
         for j in range(3):
-            assert(np.isclose(metric[i,j], metric[j,i],rtol=1e-8))
+            assert(np.isclose(metric[i, j], metric[j, i],rtol=1e-8))
 
     assert_allclose(exp_metric, metric, rtol=1e-8)
 
@@ -93,7 +93,7 @@ def test_christoffels_reissnernordstrom():
     for i in range(4):
         for j in range(4):
             for k in range(4):
-                assert(np.isclose(christoffels[i,j,k],christoffels[i,k,j],rtol=1e-8))
+                assert(np.isclose(christoffels[i, j, k],christoffels[i, k, j],rtol=1e-8))
 
     assert_allclose(chl, christoffels, rtol=1e-8)
 
@@ -125,6 +125,7 @@ def test_f_vec_s_reissnernordstrom():
     assert isinstance(f_vec, np.ndarray)
     assert_allclose(f_vec_expected, f_vec, rtol=1e-8)
 
+
 def test_raiseerror_reissnernordstrom():
     M = 2.0e30 * u.kg
     Q = 1.0e30 * u.C
@@ -148,8 +149,5 @@ def test_raiseerror_reissnernordstrom():
 
     with pytest.raises(CoordinateError):
         ms = ReissnerNordstrom(coords=crds, M=M, Q=Q)
-        state = np.array([1,1,1,1,1,1,1,1])
+        state = np.array([1, 1, 1, 1, 1, 1, 1, 1])
         f_vec = ms._f_vec(0., state)
-
-
-
